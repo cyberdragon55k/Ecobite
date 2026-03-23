@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Toggle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="login-box">
+
+        <!-- Toggle -->
+        <div class="toggle">
+            <button id="userBtn" class="active">User</button>
+            <button id="adminBtn">Admin</button>
+        </div>
+
+        <!-- User Form -->
+        <form id="userForm" class="form active">
+            <h2>User Login</h2>
+
+            <div class="input-box">
+                <input type="email" id="userEmail" required>
+                <label>Email</label>
+            </div>
+
+            <div class="input-box">
+                <input type="password" id="userPassword" required>
+                <label>Password</label>
+            </div>
+
+            <p class="error" id="userError"></p>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <!-- Admin Form -->
+        <form id="adminForm" class="form">
+            <h2>Admin Login</h2>
+
+            <div class="input-box">
+                <input type="email" id="adminEmail" required>
+                <label>Email</label>
+            </div>
+
+            <div class="input-box">
+                <input type="password" id="adminPassword" required>
+                <label>Password</label>
+            </div>
+
+            <p class="error" id="adminError"></p>
+
+            <button type="submit">Login</button>
+        </form>
+
+    </div>
+</div>
+
+<script>
+// Toggle
+const userBtn = document.getElementById("userBtn");
+const adminBtn = document.getElementById("adminBtn");
+const userForm = document.getElementById("userForm");
+const adminForm = document.getElementById("adminForm");
+
+userBtn.onclick = () => {
+    userBtn.classList.add("active");
+    adminBtn.classList.remove("active");
+    userForm.classList.add("active");
+    adminForm.classList.remove("active");
+};
+
+adminBtn.onclick = () => {
+    adminBtn.classList.add("active");
+    userBtn.classList.remove("active");
+    adminForm.classList.add("active");
+    userForm.classList.remove("active");
+};
+
+// 👥 Multiple Users
+const users = [
+    { email: "aditya@gmail.com", password: "1234" },
+    { email: "aryan@gmail.com", password: "1234" },
+    { email: "anubhav@gmail.com", password: "1234" },
+
+];
+
+// 🛠 Admin
+const admin = {
+    email: "admin@gmail.com",
+    password: "0123"
+};
+
+// User Login Check
+userForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("userEmail").value;
+    const password = document.getElementById("userPassword").value;
+    const error = document.getElementById("userError");
+
+    // Check if user exists
+    const validUser = users.find(user => 
+        user.email === email && user.password === password
+    );
+
+    if (validUser) {
+        error.style.color = "green";
+        error.textContent = "Login successful!";
+    } else {
+        error.style.color = "red";
+        error.textContent = "Invalid email or password";
+    }
+});
+
+// Admin Login Check
+adminForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("adminEmail").value;
+    const password = document.getElementById("adminPassword").value;
+    const error = document.getElementById("adminError");
+
+    if (email === admin.email && password === admin.password) {
+        error.style.color = "green";
+        error.textContent = "Admin login successful!";
+    } else {
+        error.style.color = "red";
+        error.textContent = "Invalid admin email or password";
+    }
+});
+</script>
+
+</body>
+</html>
